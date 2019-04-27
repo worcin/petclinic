@@ -43,7 +43,7 @@ pipeline {
             script{
               docker.image("$DOCKERHUB_LOGIN/petclinic:$BUILD_NUMBER").withRun { container ->
                 docker.image("maven:3.5-jdk-8").inside("--link=${container.id}:selenium -P -v /maven/.m2:/root/.m2"){
-                  sh 'mvn verify -Pselenium-tests -Dselenium.host=selenium -pl petclinic_it'
+                  sh 'mvn verify -Pselenium-tests -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Dselenium.host=selenium -pl petclinic_it'
                 }
               }
             }
@@ -57,7 +57,7 @@ pipeline {
         stage('LastTest') {
           steps {
               sh "docker run -d --name dockerLT -p 58080:8080 $DOCKERHUB_LOGIN/petclinic:$BUILD_NUMBER"
-              sh "mvn verify -Pjmeter-tests -pl petclinic_it"
+              sh "mvn verify -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Pjmeter-tests -pl petclinic_it"
           }
           post {
             always {
