@@ -57,7 +57,7 @@ pipeline {
         stage('LastTest') {
           steps {
               sh "docker run -d --name dockerLT -p 58080:8080 $DOCKERHUB_LOGIN/petclinic:$BUILD_NUMBER"
-              sh "mvn verify -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Pjmeter-tests -pl petclinic_it"
+              sh "mvn verify -Pjmeter-tests -pl petclinic_it"
           }
           post {
             always {
