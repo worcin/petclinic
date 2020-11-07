@@ -1,6 +1,6 @@
 version: 2
 jobs:
- build: #Definiton des Jobs mit Namen build
+ build: #Definiton des Jobs mit Namen "build"
    docker:
      - image: circleci/openjdk:8-jdk # Dockerimage in dem gearbeitet wird
    working_directory: ~/repo
